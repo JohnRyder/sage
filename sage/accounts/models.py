@@ -1,9 +1,39 @@
-from django.contrib.auth import AbstractBaseUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
+class AccountManager(BaseUserManager):
+    
+    def _create_user(self, username, email, password,
+                     is_admin, **extra_fields):
+        
+        now = timezone.now()
+        
+        if not email:
+            raise ValueError("Must provide a valid email address")
+        if not username:
+            raise ValueError("Must provide a username")
+    
+        email = self.normalize_email(email)
+        
+        user = self.model(
+            username = username, email = email, is_admin = is_admin, created_on = now, **extra_fields
+        )
+        user.set_password(password)
+        user.save()
+        
+        return user
+    
+    def create_user(self, username, email=None, password=None, **extra_fields):
+        return self._create_user(username, email, password, False, **extra_fields)
+
+    def create_superuser(self, username, email, password, **extra_fields):
+        return self._create_user(username, email, password, True, **extra_fields)
+
 class Account(AbstractBaseUser):
+    
     username = models.CharField(max_length = 50)
     email = models.EmailField(unique = True)
     
@@ -12,7 +42,14 @@ class Account(AbstractBaseUser):
     city = models.CharField(max_length = 100)
     country = models.CharField(max_length = 100)
     
-    isAdmin = models.BooleanField(default = False)
+    is_admin = models.BooleanField(default = False)
+    
+    created_on = models.DateTimeField(auto_now_add = True)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
+    
+    objects = AccountManager()
     
     def get_full_name(self):
         if self.first_name and self.last_name:
