@@ -8,7 +8,9 @@ class AccountManager(BaseUserManager):
     
     def _create_user(self, username, email, password,
                      is_admin, **extra_fields):
-        
+        """
+        Creates a user with the given credentials
+        """   
         now = timezone.now()
         
         if not email:
@@ -27,9 +29,15 @@ class AccountManager(BaseUserManager):
         return user
     
     def create_user(self, username, email=None, password=None, **extra_fields):
+        """
+        Create a regular (non-admin) user
+        """
         return self._create_user(username, email, password, False, **extra_fields)
 
     def create_superuser(self, username, email, password, **extra_fields):
+        """
+        Create an admin
+        """
         return self._create_user(username, email, password, True, **extra_fields)
 
 class Account(AbstractBaseUser):
@@ -62,4 +70,7 @@ class Account(AbstractBaseUser):
             return self.first_name
         else:
             return self.username
+        
+    def __unicode__(self):
+        return self.username
 
