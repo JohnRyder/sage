@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from rest_framework import routers
 
-from authentication.views import AccountViewSet
+from accounts.views import AccountViewSet
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
