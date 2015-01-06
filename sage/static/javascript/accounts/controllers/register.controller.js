@@ -3,11 +3,11 @@
 
 	angular
     	.module('sage.accounts.controllers')
-    	.factory('RegisterController', RegisterController);
+    	.controller('RegisterController', RegisterController);
     
-    RegisterController.$inject = ['$location', '$scope', 'Accounts'];
+    RegisterController.$inject = ['$scope', 'Accounts'];
     
-    function RegisterController($location, $scope, Accounts){
+    function RegisterController($scope, Accounts){
         var vm = this;
         
         vm.register = register;
@@ -17,4 +17,4 @@
         }
     }
     
-}());
+})();

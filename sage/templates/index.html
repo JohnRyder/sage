@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="sage">
+<head>
+  <title>thinkster-django-angular-boilerplate</title>
+
+  <base href="/" />
+
+  {% include 'stylesheets.html' %}
+  {% include 'javascript.html' %}
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 ng-view"></div>
+    </div>
+  </div>
+    
+</body>
+</html>

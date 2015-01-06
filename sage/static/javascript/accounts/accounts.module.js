@@ -11,5 +11,5 @@
     	.module('sage.accounts.controllers', []);
     
     angular
-    	.module('sage.accounts.services', []);
-}());
+    	.module('sage.accounts.services', ['ngCookies']);
+})();

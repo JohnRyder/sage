@@ -5,9 +5,17 @@
     	.module('sage', [
         	'sage.routes',
         	'sage.accounts'
-        ]);
+        ])
+    	.run(run);
     
     angular
-    	.moudule('sage.routes', [$ngRoute]);
+    	.module('sage.routes', ['ngRoute']);
+    
+    run.$inject = ['$http'];
 
-}());
+    function run($http) {
+    	$http.defaults.xsrfHeaderName = 'X-CSRFToken';
+    	$http.defaults.xsrfCookieName = 'csrftoken';
+    } 
+
+})();

@@ -11,8 +11,10 @@
         $routeProvider.when('/register', {
             controller: 'RegisterController',
             controllerAs: 'vm',
-            templateUrl: '/static/templates/accounts/register.html'
-        }).otherwise('/');
+            templateUrl: '/static/templates/register.html'
+        }).otherwise({
+            redirectTo: '/'
+        });
     }
 
-}());
+})();
