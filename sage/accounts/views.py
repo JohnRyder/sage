@@ -1,7 +1,10 @@
+import json
+
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic.base import TemplateView
 from django.utils.decorators import method_decorator
+from django.auth import authenticate, login
 
 from rest_framework import permissions, viewsets
 from rest_framework import status, views
@@ -10,6 +13,20 @@ from rest_framework.response import Response
 from accounts.models import Account
 from accounts.permissions import IsAccountOwner
 from accounts.serializers import AccountSerializer
+
+class LoginView(views.APIView):
+    
+    def post(self, request, format=None):
+    	data = json.loads(request.body)    
+        
+        email = data.get('email', None)
+        password = data.get('password', None)
+        
+        account = authenticate(email = email, password = password)
+        
+        if account is not None:
+            if account.is_active:
+                login(request, account)
 
 class IndexView(TemplateView):
     template_name = 'index.html'

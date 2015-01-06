@@ -51,6 +51,7 @@ class Account(AbstractBaseUser):
     country = models.CharField(max_length = 100, blank = True)
     
     is_admin = models.BooleanField(default = False)
+    is_active = models.BooleanField(default = True)
     
     created_on = models.DateTimeField(auto_now_add = True)
     
