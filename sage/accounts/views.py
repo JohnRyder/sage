@@ -4,6 +4,7 @@ from django.views.generic.base import TemplateView
 from django.utils.decorators import method_decorator
 
 from rest_framework import permissions, viewsets
+from rest_framework import status, views
 from rest_framework.response import Response
 
 from accounts.models import Account
@@ -35,7 +36,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(data = request.data)
         
         if serializer.is_valid():
-            Account.object.create_user(**serializer.validated_data)
+            Account.objects.create_user(**serializer.validated_data)
             return Response(serializer.validated_data, status = status.HTTP_201_CREATED)
         
         return Response({

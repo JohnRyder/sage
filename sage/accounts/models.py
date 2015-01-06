@@ -21,7 +21,7 @@ class AccountManager(BaseUserManager):
         email = self.normalize_email(email)
         
         user = self.model(
-            username = username, email = email, is_admin = is_admin, created_on = now, **extra_fields
+            username = username, email = email, is_admin = is_admin, created_on = now
         )
         user.set_password(password)
         user.save()
@@ -45,10 +45,10 @@ class Account(AbstractBaseUser):
     username = models.CharField(max_length = 50, unique = True)
     email = models.EmailField(unique = True)
     
-    first_name = models.CharField(max_length = 60)
-    last_name = models.CharField(max_length = 60)
-    city = models.CharField(max_length = 100)
-    country = models.CharField(max_length = 100)
+    first_name = models.CharField(max_length = 60, blank = True)
+    last_name = models.CharField(max_length = 60, blank = True)
+    city = models.CharField(max_length = 100, blank = True)
+    country = models.CharField(max_length = 100, blank = True)
     
     is_admin = models.BooleanField(default = False)
     
